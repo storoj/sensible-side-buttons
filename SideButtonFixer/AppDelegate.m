@@ -197,7 +197,7 @@ typedef NS_ENUM(NSInteger, MenuItem) {
         [menu addItem:[NSMenuItem separatorItem]];
         assert(menu.itemArray.count - 1 == MenuItemStartupSeparator);
         
-        AboutView* text = [[AboutView alloc] initWithFrame:NSMakeRect(0, 0, 320, 100)]; //arbitrary height
+        AboutView* text = [[AboutView alloc] initWithFrame:NSMakeRect(0, 0, 320, 0)];
         NSMenuItem* aboutText = [[NSMenuItem alloc] initWithTitle:@"Text" action:NULL keyEquivalent:@""];
         aboutText.view = text;
         [menu addItem:aboutText];
@@ -490,21 +490,11 @@ typedef NS_ENUM(NSInteger, MenuItem) {
 
 -(void) layout {
     [super layout];
+    self.text.frame = NSInsetRect(
+                                  NSMakeRect(0, 0, NSWidth(self.bounds), 100),
+                                  self.margin, 0);
     
-    CGFloat margin = [self margin];
-    
-    // text view sizing
-    {
-        // first, set the correct width
-        CGFloat arbitraryHeight = 100;
-        self.text.frame = NSMakeRect(margin, 0, self.bounds.size.width - margin, arbitraryHeight);
-        
-        // next, autosize to get the height
-        [self.text sizeToFit];
-        
-        // finally, position the view correctly
-        self.text.frame = NSMakeRect(self.text.frame.origin.x, self.bounds.size.height - self.text.frame.size.height, self.text.frame.size.width, self.text.frame.size.height);
-    }
+    [self.text sizeToFit];
 }
 
 @end
