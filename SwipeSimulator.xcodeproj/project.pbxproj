@@ -101,7 +101,9 @@
 				4ECC16A01EE54D790062AC72 /* External */,
 				4ECC16971EE54D3D0062AC72 /* Products */,
 			);
+			indentWidth = 4;
 			sourceTree = "<group>";
+			tabWidth = 4;
 		};
 		4ECC16971EE54D3D0062AC72 /* Products */ = {
 			isa = PBXGroup;
