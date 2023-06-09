@@ -53,14 +53,13 @@ static CGEventRef SBFMouseCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     BOOL swapButtons = [[NSUserDefaults standardUserDefaults] boolForKey:@"SBFSwapButtons"];
     
     if (number == (swapButtons ? 4 : 3)) {
-        if ((mouseDown && down) || (!mouseDown && !down)) {
+        if (mouseDown ^ down) {
             SBFFakeSwipe(kTLInfoSwipeLeft);
         }
-        
         return NULL;
     }
     else if (number == (swapButtons ? 3 : 4)) {
-        if ((mouseDown && down) || (!mouseDown && !down)) {
+        if (mouseDown ^ down) {
             SBFFakeSwipe(kTLInfoSwipeRight);
         }
         
