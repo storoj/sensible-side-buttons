@@ -45,28 +45,27 @@ static void SBFFakeSwipe(TLInfoSwipeDirection dir) {
     CFRelease(event2);
 }
 
+const CGMouseButton kCGMouseButtonBack = 3;
+const CGMouseButton kCGMouseButtonForward = 4;
+
 static CGEventRef SBFMouseCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *refcon) {
     int64_t number = CGEventGetIntegerValueField(event, kCGMouseEventButtonNumber);
-    BOOL down = (CGEventGetType(event) == kCGEventOtherMouseDown);
     
-    BOOL mouseDown = [[NSUserDefaults standardUserDefaults] boolForKey:@"SBFMouseDown"];
-    BOOL swapButtons = [[NSUserDefaults standardUserDefaults] boolForKey:@"SBFSwapButtons"];
-    
-    if (number == (swapButtons ? 4 : 3)) {
-        if (mouseDown ^ down) {
-            SBFFakeSwipe(kTLInfoSwipeLeft);
+    switch (number) {
+        case kCGMouseButtonBack:
+        case kCGMouseButtonForward: {
+            BOOL down = (CGEventGetType(event) == kCGEventOtherMouseDown);
+            BOOL mouseDown = [[NSUserDefaults standardUserDefaults] boolForKey:@"SBFMouseDown"];
+            BOOL swapButtons = [[NSUserDefaults standardUserDefaults] boolForKey:@"SBFSwapButtons"];
+
+            if (!(mouseDown ^ down)) {
+                BOOL back = ((number == kCGMouseButtonBack) ^ swapButtons);
+                SBFFakeSwipe(back ? kTLInfoSwipeLeft : kTLInfoSwipeRight);
+            }
+            return NULL;
         }
-        return NULL;
-    }
-    else if (number == (swapButtons ? 3 : 4)) {
-        if (mouseDown ^ down) {
-            SBFFakeSwipe(kTLInfoSwipeRight);
-        }
-        
-        return NULL;
-    }
-    else {
-        return event;
+        default:
+            return event;
     }
 }
 
