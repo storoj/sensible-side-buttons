@@ -45,7 +45,6 @@
 		4EC7C3BD1EE711B400C9F725 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4EC7C3C21EE711B400C9F725 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4EC7C3C31EE711B400C9F725 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		4EC7C3C51EE711B400C9F725 /* SideButtonFixer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SideButtonFixer.entitlements; sourceTree = "<group>"; };
 		4ECC16961EE54D3D0062AC72 /* swipesiml */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = swipesiml; sourceTree = BUILT_PRODUCTS_DIR; };
 		4ECC16991EE54D3D0062AC72 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4ECC16A21EE54D870062AC72 /* TouchEvents.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = TouchEvents.c; sourceTree = "<group>"; };
@@ -88,7 +87,6 @@
 				4EC7C3BD1EE711B400C9F725 /* Assets.xcassets */,
 				4EC7C3C21EE711B400C9F725 /* Info.plist */,
 				4EC7C3C31EE711B400C9F725 /* main.m */,
-				4EC7C3C51EE711B400C9F725 /* SideButtonFixer.entitlements */,
 			);
 			path = SideButtonFixer;
 			sourceTree = "<group>";
