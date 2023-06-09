@@ -102,7 +102,6 @@ typedef NS_ENUM(NSInteger, MenuItem) {
 @interface AboutView: NSView
 @property (nonatomic, strong) NSTextView* text;
 @property (nonatomic, assign) MenuMode menuMode;
--(CGFloat) margin;
 @end
 
 @implementation AppDelegate
@@ -472,9 +471,10 @@ typedef NS_ENUM(NSInteger, MenuItem) {
 
 -(void) layout {
     [super layout];
+    CGFloat margin = 17;
     self.text.frame = NSInsetRect(
                                   NSMakeRect(0, 0, NSWidth(self.bounds), 100),
-                                  self.margin, 0);
+                                  margin, 0);
     
     [self.text sizeToFit];
 }
