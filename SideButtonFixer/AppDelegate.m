@@ -22,12 +22,21 @@
 #import "AppDelegate.h"
 #import "TouchEvents.h"
 
-static NSMutableDictionary<NSNumber*, NSArray<NSDictionary*>*>* swipeInfo = nil;
-static NSArray* nullArray = nil;
-
 static void SBFFakeSwipe(TLInfoSwipeDirection dir) {
-    CGEventRef event1 = tl_CGEventCreateFromGesture((__bridge CFDictionaryRef)(swipeInfo[@(dir)][0]), (__bridge CFArrayRef)nullArray);
-    CGEventRef event2 = tl_CGEventCreateFromGesture((__bridge CFDictionaryRef)(swipeInfo[@(dir)][1]), (__bridge CFArrayRef)nullArray);
+    NSDictionary* swipeInfo1 = @{
+        (id)kTLInfoKeyGestureSubtype: @(kTLInfoSubtypeSwipe),
+        (id)kTLInfoKeyGesturePhase: @(1)
+    };
+    NSDictionary* swipeInfo2 = @{
+        (id)kTLInfoKeyGestureSubtype: @(kTLInfoSubtypeSwipe),
+        (id)kTLInfoKeySwipeDirection: @(dir),
+        (id)kTLInfoKeyGesturePhase: @(4)
+    };
+    
+    NSArray *touches = @[];
+    
+    CGEventRef event1 = tl_CGEventCreateFromGesture((__bridge CFDictionaryRef)swipeInfo1, (__bridge CFArrayRef)touches);
+    CGEventRef event2 = tl_CGEventCreateFromGesture((__bridge CFDictionaryRef)swipeInfo2, (__bridge CFArrayRef)touches);
     
     CGEventPost(kCGHIDEventTap, event1);
     CGEventPost(kCGHIDEventTap, event2);
@@ -102,9 +111,6 @@ typedef NS_ENUM(NSInteger, MenuItem) {
 
 -(void) dealloc {
     [self startTap:NO];
-    
-    swipeInfo = nil;
-    nullArray = nil;
 }
 
 -(void) setMenuMode:(MenuMode)menuMode {
@@ -129,28 +135,6 @@ typedef NS_ENUM(NSInteger, MenuItem) {
                                                               @"SBFDonated": @NO,
                                                               @"SBFSwapButtons": @NO
                                                               }];
-    
-    // setup globals
-    {
-        swipeInfo = [NSMutableDictionary dictionary];
-        
-        for (NSNumber* direction in @[ @(kTLInfoSwipeUp), @(kTLInfoSwipeDown), @(kTLInfoSwipeLeft), @(kTLInfoSwipeRight) ]) {
-            NSDictionary* swipeInfo1 = [NSDictionary dictionaryWithObjectsAndKeys:
-                                        @(kTLInfoSubtypeSwipe), kTLInfoKeyGestureSubtype,
-                                        @(1), kTLInfoKeyGesturePhase,
-                                        nil];
-            
-            NSDictionary* swipeInfo2 = [NSDictionary dictionaryWithObjectsAndKeys:
-                                        @(kTLInfoSubtypeSwipe), kTLInfoKeyGestureSubtype,
-                                        direction, kTLInfoKeySwipeDirection,
-                                        @(4), kTLInfoKeyGesturePhase,
-                                        nil];
-            
-            swipeInfo[direction] = @[ swipeInfo1, swipeInfo2 ];
-        }
-        
-        nullArray = @[];
-    }
     
     // create status bar item
     {
