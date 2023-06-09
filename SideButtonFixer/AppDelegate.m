@@ -96,13 +96,13 @@ typedef NS_ENUM(NSInteger, MenuItem) {
 };
 
 @interface AppDelegate () <NSMenuDelegate>
-@property (nonatomic, retain) NSStatusItem* statusItem;
+@property (nonatomic, strong) NSStatusItem* statusItem;
 @property (nonatomic, assign) CFMachPortRef tap;
 @property (nonatomic, assign) MenuMode menuMode;
 @end
 
 @interface AboutView: NSView
-@property (nonatomic, retain) NSTextView* text;
+@property (nonatomic, strong) NSTextView* text;
 @property (nonatomic, assign) MenuMode menuMode;
 -(CGFloat) margin;
 @end
