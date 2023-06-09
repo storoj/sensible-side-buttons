@@ -414,21 +414,6 @@ typedef NS_ENUM(NSInteger, MenuItem) {
     NSFont* boldFont = [NSFont fontWithDescriptor:boldFontDesc size:font.pointSize];
     if (!boldFont) { boldFont = font; }
     
-    // AB: dynamic color component extraction experiments
-    //CGFloat h1, s1, b1, a1, h2, s2, b2, a2;
-    //NSColorSpace* space;
-    //if (@available(macOS 10.13, *)) {
-    //    space = [[NSColor redColor] colorUsingType:NSColorTypeComponentBased].colorSpace;
-    //} else {
-    //    space = [NSColorSpace deviceRGBColorSpace];
-    //}
-    //NSColor* color = [[NSColor systemBlueColor] colorUsingColorSpace:space];
-    //[color getHue:&h1 saturation:&s1 brightness:&b1 alpha:&a1];
-    //color = [[NSColor systemRedColor] colorUsingColorSpace:space];
-    //[color getHue:&h2 saturation:&s2 brightness:&b2 alpha:&a2];
-    
-    //NSColor* regularColor = [NSColor colorWithRed:120/255.0 green:120/255.0 blue:160/255.0 alpha:1];
-    //NSColor* regularColor = [NSColor colorWithHue:h1 saturation:s1 brightness:b1 alpha:a1];
     NSColor* regularColor = [NSColor secondaryLabelColor];
     NSColor* alertColor = [NSColor systemRedColor];
     
@@ -491,10 +476,6 @@ typedef NS_ENUM(NSInteger, MenuItem) {
     self = [super initWithFrame:frameRect];
     
     if (self) {
-        //NSTextView* testColor = [NSTextView new];
-        //testColor.backgroundColor = NSColor.greenColor;
-        //[self addSubview:testColor];
-        
         self.text = [NSTextView new];
         self.text.backgroundColor = NSColor.clearColor;
         [self.text setEditable:NO];
@@ -524,11 +505,6 @@ typedef NS_ENUM(NSInteger, MenuItem) {
         // finally, position the view correctly
         self.text.frame = NSMakeRect(self.text.frame.origin.x, self.bounds.size.height - self.text.frame.size.height, self.text.frame.size.width, self.text.frame.size.height);
     }
-    
-    //NSView* testView = [self subviews][0];
-    //testView.frame = self.bounds;
-    
-    //NSLog(@"Text size: %@, self size: %@", NSStringFromSize(self.text.frame.size), NSStringFromSize(self.bounds.size));
 }
 
 @end
