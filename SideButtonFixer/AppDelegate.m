@@ -78,6 +78,7 @@ typedef NS_ENUM(NSInteger, MenuMode) {
 @interface AboutView: NSView
 @property (nonatomic, strong) NSTextView* text;
 @property (nonatomic, assign) MenuMode menuMode;
+- (void)sizeToFit;
 @end
 
 @interface AppDelegate () <NSMenuDelegate>
@@ -238,9 +239,7 @@ typedef NS_ENUM(NSInteger, MenuMode) {
         self.accessibilityItem.hidden = (mode != MenuModeAccessibility);
     }
     
-    AboutView* view = (AboutView*)self.statusItem.menu.itemArray[MenuItemAboutText].view;
-    [view layoutSubtreeIfNeeded]; //used to auto-calculate the text view size
-    view.frame = NSMakeRect(0, 0, view.bounds.size.width, view.text.frame.size.height);
+    [self.aboutView sizeToFit];
     
     // only show the menu item to hide the icon if the API is available
     if (@available(macOS 10.12, *)) {
@@ -435,14 +434,19 @@ typedef NS_ENUM(NSInteger, MenuMode) {
     return self;
 }
 
--(void) layout {
-    [super layout];
-    CGFloat margin = 17;
-    self.text.frame = NSInsetRect(
-                                  NSMakeRect(0, 0, NSWidth(self.bounds), 100),
-                                  margin, 0);
-    
+- (void)sizeToFit {
+    NSSize sz = self.bounds.size;
+    self.text.textContainerInset = NSMakeSize(17, 0);
+    [self.text setFrameSize:NSMakeSize(sz.width, 1000)];
     [self.text sizeToFit];
+    sz.height = NSHeight(self.text.bounds);
+   
+    [self setFrameSize:sz];
+}
+
+- (void)layout {
+    [super layout];
+    self.text.frame = self.bounds;
 }
 
 @end
